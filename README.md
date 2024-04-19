@@ -2,6 +2,10 @@
 
 [![Gem Version](https://badge.fury.io/rb/tale.svg)](https://badge.fury.io/rb/tale)
 
+
+# 중간 수정
+
+
 ## Features
 - Easy installation
 - Compatible with GitHub Pages
@@ -26,3 +30,4 @@ $ bundle exec jekyll serve
 And you're all set! Head over to http://127.0.0.1:4000/ to see your site in action.
 
 
+## READ 수정
