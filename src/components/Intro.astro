@@ -1,0 +1,46 @@
+---
+const highlights = [
+  '인하대학교 컴퓨터공학과 졸업',
+  'IT 동호회 SOPT (Android 파트장), Depromeet',
+  'HECAS → Querensys 선임 연구원 (7년 6개월)',
+  '현재 구직 중',
+];
+---
+
+<section class="max-w-3xl mx-auto px-6 md:px-8 py-16 md:py-24">
+      <div class="flex flex-col items-center text-center space-y-8">
+        {/* Status Badge */}
+        <div class="inline-flex px-4 py-1.5 bg-gray-800 border border-gray-700 text-sm text-gray-300">
+          구직중
+        </div>
+
+        {/* Main Greeting */}
+        <h1 class="text-3xl md:text-4xl tracking-tight text-gray-50">
+          안녕하세요. 이동석 입니다.
+        </h1>
+
+        {/* Role - designed for typing animation */}
+        <p class="text-xl md:text-2xl text-blue-400">
+          Application Developer
+        </p>
+
+        {/* Career History */}
+        <div class="space-y-3 pt-4">
+          {highlights.map((highlight) => (
+            <p class="text-sm md:text-base text-gray-300 leading-relaxed">
+              {highlight}
+            </p>
+          ))}
+        </div>
+
+        {/* Skill Badges */}
+        <div class="flex gap-3 pt-4">
+          <span class="px-4 py-2 bg-gray-800 border border-gray-700 text-sm text-gray-300">
+            Android
+          </span>
+          <span class="px-4 py-2 bg-gray-800 border border-gray-700 text-sm text-gray-300">
+            Web
+          </span>
+        </div>
+      </div>
+    </section>
