@@ -1,0 +1,59 @@
+---
+interface Props {
+  text: string;
+  speed?: number;
+  className?: string;
+}
+
+const {
+  text,
+  speed = 100,
+  className = '',
+} = Astro.props;
+---
+
+<span id="typingShow" class={className} data-text={text} data-speed={speed}>
+  <span class="typing-text"></span>
+  <span class="inline-block animate-pulse">|</span>
+</span>
+
+<script>
+    const root = document.querySelector('#typingShow') as HTMLElement;
+    const text: string|undefined = root.dataset.text;
+    const speed = Number(root.dataset.speed);
+    const target = document.querySelector('.typing-text') as HTMLElement;
+
+    let index = 0;
+    let timeoutId: number; 
+
+    function resetAndStart() {
+        clearTimeout(timeoutId);
+        index = 0;
+        target.textContent = '';
+        type();
+    }
+
+    const type = () => {
+        if (text === undefined) return;
+        if (index < text!.length) {
+            target.textContent += text[index];
+            index++;
+            timeoutId = setTimeout(type, speed);
+        }
+    };
+
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.isIntersecting) {
+                resetAndStart();
+            } else {
+                clearTimeout(timeoutId);
+            }
+        },
+        {
+            threshold: 0.5, // 50% 이상 보일 때
+        }   
+    );
+
+    observer.observe(root);
+</script>

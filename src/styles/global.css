@@ -24,6 +24,7 @@
   :root, :host {
     --font-sans: Noto Sans KR, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --color-green-500: oklch(.723 .219 149.579);
     --spacing: .25rem;
     --container-3xl: 48rem;
     --container-4xl: 56rem;
@@ -45,10 +46,17 @@
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
+    --text-5xl: 3rem;
+    --text-5xl--line-height: 1;
+    --text-6xl: 3.75rem;
+    --text-6xl--line-height: 1;
+    --text-7xl: 4.5rem;
+    --text-7xl--line-height: 1;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --tracking-tight: -.025em;
     --leading-relaxed: 1.625;
+    --animate-pulse: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
     --aspect-video: 16 / 9;
     --default-transition-duration: .15s;
     --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
@@ -495,6 +503,10 @@
     max-width: var(--container-6xl);
   }
 
+  .animate-pulse {
+    animation: var(--animate-pulse);
+  }
+
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -577,6 +589,10 @@
     border-radius: 3.40282e38px;
   }
 
+  .rounded-half {
+    border-radius: 50%;
+  }
+
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -590,6 +606,10 @@
   .border-border {
     border-color: var(--border);
   }
+  
+  .border-border-fix {
+    border-color: var(--border-fix);
+  }
 
   .bg-background {
     background-color: var(--background);
@@ -601,6 +621,10 @@
 
   .bg-card {
     background-color: var(--card);
+  }
+
+  .bg-green-500 {
+    background-color: var(--color-green-500);
   }
 
   .bg-muted {
@@ -639,6 +663,10 @@
     padding-inline: calc(var(--spacing) * 6);
   }
 
+  .px-10 {
+    padding-inline: calc(var(--spacing) * 10);
+  }
+
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
@@ -649,6 +677,10 @@
 
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
   }
 
   .py-12 {
@@ -699,6 +731,11 @@
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+
+  .text-5xl {
+    font-size: var(--text-5xl);
+    line-height: var(--tw-leading, var(--text-5xl--line-height));
   }
 
   .text-base {
@@ -795,6 +832,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-primary:hover {
+      background-color: var(--primary);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:text-foreground:hover {
       color: var(--foreground);
     }
@@ -803,6 +846,12 @@
   @media (hover: hover) {
     .hover\:text-primary:hover {
       color: var(--primary);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-primary-foreground:hover {
+      color: var(--primary-foreground);
     }
   }
 
@@ -914,6 +963,13 @@
   }
 
   @media (width >= 48rem) {
+    .md\:text-6xl {
+      font-size: var(--text-6xl);
+      line-height: var(--tw-leading, var(--text-6xl--line-height));
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:text-base {
       font-size: var(--text-base);
       line-height: var(--tw-leading, var(--text-base--line-height));
@@ -1018,6 +1074,20 @@
   }
 
   @media (width >= 64rem) {
+    .lg\:text-3xl {
+      font-size: var(--text-3xl);
+      line-height: var(--tw-leading, var(--text-3xl--line-height));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:text-7xl {
+      font-size: var(--text-7xl);
+      line-height: var(--tw-leading, var(--text-7xl--line-height));
+    }
+  }
+
+  @media (width >= 64rem) {
     .lg\:text-base {
       font-size: var(--text-base);
       line-height: var(--tw-leading, var(--text-base--line-height));
@@ -1054,6 +1124,7 @@
   --destructive: #d4183d;
   --destructive-foreground: #efefef;
   --border: #33333326;
+  --border-fix: #333333;
   --input: transparent;
   --input-background: #e5e5e5;
   --switch-background: #cbcbcb;
@@ -1094,6 +1165,7 @@
   --destructive: oklch(.396 .141 25.723);
   --destructive-foreground: oklch(.637 .237 25.331);
   --border: #efefef26;
+  --border-fix: #efefef;
   --input: #4a4a4a;
   --ring: #888;
   --font-weight-medium: 500;
@@ -1148,4 +1220,10 @@ html {
   syntax: "*";
   inherits: false;
   initial-value: "";
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
 }
