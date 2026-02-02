@@ -9,8 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/ts-plugin": "^1.10.6",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.11",
+    "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18"
   }
 }
