@@ -20,9 +20,7 @@ const posts = await fetchVelog(VELOG_USERNAME);
             {post.thumbnail ? (
               <img src={post.thumbnail} alt={post.title} class="aspect-video w-full object-cover" />
             ) : (
-              <div class="aspect-video bg-muted flex items-center justify-center text-muted-foreground">
-                No Image
-              </div>
+              <img src="/velog-placeholder.png" alt="No Image" class="aspect-video w-full object-cover" />
             )}
           
             <div class="p-5 md:p-6 space-y-3 text-center">

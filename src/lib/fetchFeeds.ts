@@ -16,7 +16,7 @@ export async function fetchVelog(username: string): Promise<Post[]> {
     const feed = await parser.parseURL(FEED_URL);
 
     return feed.items.map((item: any) => {
-      console.log('Raw item:', item.title); // 디버깅을 위한 로그
+      // 디버깅을 위한 로그
       // 썸네일 추출
       const content = item['content:encoded'] || item.content || '';
       const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
