@@ -1,43 +1,59 @@
-# Astro Starter Kit: Minimal
+# DongSeok's Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+Next.js, Tailwind CSS, shadcn/ui로 재구성된 포트폴리오 및 블로그입니다.
+
+## 기술 스택
+
+- **Framework**: Next.js 15
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **Deployment**: GitHub Pages
+
+## 시작하기
+
+### 설치
+
+```bash
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### 개발 서버 실행
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+`http://localhost:3000`에서 확인할 수 있습니다.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### 프로덕션 빌드
 
-Any static assets, like images, can be placed in the `public/` directory.
+```bash
+npm run build
+npm start
+```
 
-## 🧞 Commands
+### GitHub Pages 배포
 
-All commands are run from the root of the project, from a terminal:
+```bash
+npm run export
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`next.config.js`의 `output: 'export'` 설정으로 `out` 디렉토리가 생성됩니다.
 
-## 👀 Want to learn more?
+## 구조
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```
+src/
+├── app/              # Next.js App Router
+├── components/       # React 컴포넌트
+├── lib/             # 유틸리티 함수
+└── styles/          # 전역 스타일
+```
+
+## 컴포넌트
+
+- **Intro**: 프로필 및 소개 섹션
+- **ProjectSection**: 프로젝트 목록
+- **BlogSection**: Velog RSS 피드
+- **Footer**: 네비게이션 및 연락처
+- **TypingAnimation**: 타이핑 애니메이션

@@ -1,10 +1,25 @@
-# build output
-dist/
-# generated types
-.astro/
+# next.js build output
+.next/
+out/
+
+# production
+/build
+/dist
 
 # dependencies
-node_modules/
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/.coverage
+
+# environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # logs
 npm-debug.log*
@@ -12,13 +27,19 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
+# misc
 .DS_Store
+*.pem
 
-# jetbrains setting folder
+# IDE
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# turbo
+.turbo/
+
+# AI-DLC
+.aidlc-rule-details/

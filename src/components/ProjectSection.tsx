@@ -1,0 +1,170 @@
+interface Project {
+  id: number;
+  year: string;
+  name: string;
+  title: string;
+  tech: string[];
+  role: string;
+  period?: string;
+  achievements: string[];
+}
+
+const projects: Project[] = [
+  {
+    id: 1,
+    year: '2025',
+    name: '공공 교육기관 AI 수능형 평가 서비스 오픈',
+    title: '공공 교육기관 AI 수능형 평가 서비스 오픈',
+    tech: ['JavaScript', 'Typescript', 'Node.js', 'CSS', 'HTML', 'Jenkins'],
+    role: '웹 프론트 리드 개발자',
+    achievements: [
+      '모바일 전용 학습 서비스를 웹 중심 아키텍처로 재설계하여 다양한 브라우저·디바이스 환경 지원',
+      'Media Query 및 컴포넌트 단위 UI 설계 구조로 모바일·웹 환경별 UX 최적화',
+      '서버 API 기반 무한 스크롤, 실시간 채점, PDF 캐싱 최적화로 학습 성능·안정성 확보',
+      'Web Worker 활용 학습 시간 측정 및 서버 동기화 실패 대응 시나리오 구현',
+      '단계적 오픈을 통한 안정적 서비스 런칭',
+    ],
+  },
+  {
+    id: 2,
+    year: '2024',
+    name: '공공기관 사내 사회봉사 관리 시스템 개편',
+    title: '공공기관 사내 사회봉사 관리 시스템 개편',
+    tech: ['전자정부프레임워크', 'JSP', 'Spring', 'Oracle DB', 'JavaScript', 'CSS'],
+    role: '프로젝트 리드 및 JSP 개발자',
+    achievements: [
+      '노후화된 사내 봉사활동 관리 시스템을 최신 전자정부프레임워크 환경에 맞게 개편',
+      '사용자 장시간 사용을 고려한 UI 개선 및 반응형 화면 구성 적용',
+      '단일 봉사회 구조를 다중 봉사회 가입 구조로 전환하며 관련 화면, API, DB 구조 기능 재설계',
+      'DB 이전 및 전 사용자 QA를 거쳐 시스템 개편 및 서비스 정상 오픈 완료',
+    ],
+  },
+  {
+    id: 3,
+    year: '2024',
+    name: '대기업 네트워크 장비 관리 시스템 개편',
+    title: '대기업 네트워크 장비 관리 시스템 개편',
+    tech: ['Nextjs', 'Web Socket', 'Android', 'Kotlin'],
+    role: '웹·모바일 프론트엔드 개발 담당',
+    achievements: [
+      '네트워크 장비 실시간 현황, 장애 관리, 권한·사업장 관리 기능을 포함한 관리 시스템 웹사이트 구현',
+      'WebSocket 기반 실시간 장애·복구 알림 메시지 기능 구현으로 장비 상태 모니터링 강화',
+      '트리 구조 장비 목록 관리 및 검색 기능에 캐싱·무한 스크롤 적용하여 대용량 데이터 성능 최적화',
+      '모바일 앱에서 게시판, 실시간 장애 현황 목록, 알림 기능 제공',
+      'React Query, ESLint, Prettier 도입으로 캐싱 관리 및 코드 일관성 유지하며 단기간 내 서비스 제공 완료',
+    ],
+  },
+  {
+    id: 4,
+    year: '2024',
+    name: 'AI 디지털 교과서 수업지원 도구 외주 개발',
+    title: 'AI 디지털 교과서 수업지원 도구 외주 개발',
+    tech: ['Vue', 'TypeScript'],
+    role: '협력 프론트엔드 담당',
+    achievements: [
+      'GitLab, SonarQube 기반 소스 품질 기준 충족',
+      '게시글 작성, 댓글·대댓글, 이미지 업로드 등 커뮤니티 핵심 기능 개발',
+      '대용량 댓글 성능 최적화',
+    ],
+  },
+  {
+    id: 5,
+    year: '2023 - 2021',
+    name: '모바일 신규 사업 개발 프로젝트 (SensTee, SensPet)',
+    title: '모바일 신규 사업 개발 프로젝트',
+    tech: ['Android', 'Kotlin', 'WebView', 'Bluetooth LE', 'Room'],
+    role: '안드로이드 개발자',
+    achievements: [
+      '골프 스코어 관리, 영상 녹화 및 스윙 웹 화상 멘토링 SensTee 앱 개발',
+      '반려동물 헬스케어 IoT 디바이스 연동 SensPet 앱 개발',
+      '일상 공유, 웹 화상, 블루투스 LE 기반 디바이스 제어 기능 구현',
+      '협력사와 긴밀한 커뮤니케이션으로 요구사항 신속 반영',
+      '오프라인 데모 시연 및 사용자 피드백 수집 통해 앱 품질 개선',
+    ],
+  },
+  {
+    id: 6,
+    year: '2023 - 2021',
+    name: '소규모 발표용 웹 화상 서비스 신규 사업 개발',
+    title: '소규모 발표용 웹 화상 서비스 신규 사업 개발',
+    tech: ['React', 'Redux', 'CSS', 'Styled-Components', 'WebRTC', 'Canvas'],
+    role: '기획 및 프론트엔드 리드 개발 담당',
+    achievements: [
+      '30명 이하 소규모 발표 강의를 목표로 한 웹 화상 서비스 기본 기능 범위 기획',
+      '채팅, 문서 공유, 화면 공유, 메모 기능 등 발표 중심 부가 기능 구현',
+      'WebSocket·WebRTC 통신을 인터페이스 기반으로 분리 설계하여 유지보수성 확보',
+      '고정 레이아웃 구성 및 인원·영상 비율에 따른 Bitrate 조절로 실시간 네트워크 최적화',
+      '해양환경교육기관에 서비스 도입 성과 달성',
+    ],
+  },
+];
+
+export function ProjectSection() {
+  return (
+    <section id="projects" className="min-h-screen flex items-center border-t border-border">
+      <div className="max-w-5xl mx-auto px-6 md:px-8 py-16 md:py-24 w-full">
+        {/* Title */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2
+            className="text-2xl md:text-3xl text-foreground mb-2"
+            style={{ fontFamily: 'var(--font-heading)' }}
+          >
+            Projects
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground">
+            참여한 프로젝트와 주요 성과
+          </p>
+        </div>
+
+        {/* Projects List */}
+        <div className="space-y-8">
+          {projects.map((project) => (
+            <article
+              key={project.id}
+              className="border border-border p-6 md:p-8 hover:border-muted-foreground transition-colors"
+            >
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                <div>
+                  <span className="text-xs md:text-sm text-muted-foreground">
+                    {project.year}
+                  </span>
+                  <h3 className="text-lg md:text-xl font-medium text-card-foreground mt-1">
+                    {project.title}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Role */}
+              <p className="text-sm text-primary mb-4">{project.role}</p>
+
+              {/* Tech Stack */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {project.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 bg-secondary text-secondary-foreground text-xs rounded"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              {/* Achievements */}
+              <ul className="space-y-2">
+                {project.achievements.map((achievement, index) => (
+                  <li
+                    key={index}
+                    className="text-sm text-muted-foreground leading-relaxed pl-4 border-l-2 border-primary"
+                  >
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
