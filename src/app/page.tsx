@@ -1,15 +1,9 @@
-import { Intro } from '@/components/Intro';
-import { ProjectSection } from '@/components/ProjectSection';
-import { BlogSection } from '@/components/BlogSection';
-import { Footer } from '@/components/Footer';
+import { Blogpost1 } from '@/components/blogpost1';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Intro />
-      <ProjectSection />
-      <BlogSection />
-      <Footer />
+      <Blogpost1 />
     </main>
   );
 }
