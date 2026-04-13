@@ -1,9 +1,12 @@
-import { Blogpost1 } from '@/components/blogpost1';
+import { getSortedPostsData } from "@/lib/fetchPosts";
+import Home from "./home";
 
-export default function Home() {
+export default function HomePage() {
+  const allPostsData = getSortedPostsData();
+
   return (
     <main className="min-h-screen">
-      <Blogpost1 />
+      <Home posts={allPostsData} />
     </main>
   );
 }

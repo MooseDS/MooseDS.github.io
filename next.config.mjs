@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+import createMDX from '@next/mdx';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const repo = 'MooseDS.github.io';
@@ -22,6 +25,14 @@ const nextConfig = {
       },
     ],
   },
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 };
 
-module.exports = nextConfig;
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkFrontmatter, [remarkMdxFrontmatter, { name: 'metadata' }]],
+  },
+})
+ 
+// MDX 구성과 Next.js 구성을 병합합니다
+export default withMDX(nextConfig)

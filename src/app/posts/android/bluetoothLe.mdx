@@ -1,0 +1,97 @@
+---
+title: "Android BLE"
+description: "Android BLE를 사용하여 기기를 페어링하는 방법을 알아봅니다."
+category: "Android"
+date: "2026-04-13"
+---
+# 블루투스 
+
+## 피트니스 기기 자동 페어링 하기 
+
+[기본 가이드 참고 사이트](https://developer.android.com/develop/connectivity/bluetooth/ble/ble-overview?hl=ko)
+
+Android BLE는 전력 소비를 크게 줄이게 설계 되었으며, 앱이 기기 검색, 서비스 쿼리, 정보 전송에 사용할 수 있는 API를 제공
+사용 사례) 근접 센서, 심박수 모니터, 피티니스 기기 등
+
+페어링 순서 
+- BLE API 사용을 위해서 매니페스트 파일에 여러 권한 선언
+- BluetoothAdapter에 엑세스하여 기기에서 블루투스를 사용할 수 있는지 확인 
+- BLE 기기 스캔
+- BLE 기기의 GATT 서버에 연결
+- 연결 된 기기로 데이터를 전송하여 기기를 제어 
+
+### 주요 용어
+
+- 일반 속성 프로필 (GATT)
+- 프로필
+- 속성 프로토콜 (ATT)
+- 특성
+- Descriptor
+- 서비스
+
+역할과 책임
+- 중앙 vs 주변
+- GATT 서버와 GATT 클라이언트 : 클라이언트는 요청, 서버는 이를 처리 (핸드폰, 기기 서로 바뀔 수 있다)
+
+### 권한 
+
+Android 12 이상 Target
+
+Runtime Permission
+1. BLUETOOTH_SCAN - 기기 검색
+2. BLUETOOTH_ADVERTISE - ?? 현재 기기를 다른 블루투스 기기에서 검색할 수 있도록 
+3. BLUETOOTH_CONNECT - 이미 페어링된 블루투스 기기와 통신
+
+ACCESS_FINE_LOCATION - 블루투스 검색 결과를 사용하여 실제 위치를 파생?, target 영향 받지 X
+
+Android 11 이하 Target ?
+1. BLUETOOTH (maxSdkVersion = 30) - 연결 요청, 연결 수락, 데이터 전송 등 
+2. ACCESS_FINE_LOCATION
+
+로컬 블루투스 기기 검색
+- BLUETOOTH_ADMIN
+- ACCESS_BACKGROUND_LOCATION
+
+블루투스 기능 사용 지정 
+: uses-feature 요소를 사용하여 유형과 필수 여부 지정 가능
+- android.hardware.bluetooth : 클래식 블루투스 지정
+- android.hardware.bluetooth_le : 저전력 블루투스 지정
+
+런타임에 기능 사용 가능 여부 확인 ?
+1. uses-feature 로 블루투스 required = false 선언 후 PackageManager.hasSystemFeature()로 기능 사용 가능 여부 확인 가능 ?
+
+
+### 해당 핸드폰(기기)가 블루투스를 사용할 수 있는지 확인
+
+지원하지 않는 기기에 대해 정상적으로 비활성을 위해서는 다음과 같이 진행한다 (지원이 가능한 기기에 대해서만 활성화 하는 방법)
+
+1. 권한 추가, uses-feature required false 설정
+2. BluetoothAdpater 객체를 가져올 수 있는 지 확인하기 (BluetoothManger를 이용)
+3. 블루투스를 활성화 
+    - isEnabled로 활성여부 확인
+    - Intent 사용자 권한 요청 실행 (BluetoothAdapter.ACTION_REQUEST_ENABLE)
+
+
+### 근처 BLE 기기를 스캔하기 
+
+- bluetoothAdpater.bluetoothLeScanner 의 startScan, stopScan, 매개변수 ScanCallback 사용
+1. 스캔 시작 
+    - 스캔시작시 원하는 기기를 찾거나 일정 시간이 지나면 멈추게 해야한다. (스캔은 배터리 사용이 많으므로 유의)
+    - 특정 유형의 기기만 검색하려면 ScanFilter (찾는 장치 목록 제한), Scansettings 를 매개변수로 지정한다
+2. Callback으로 결과 받기
+    - 목록은 ScanResult 으로 확인 가능하다 (BluetoothDevice)
+
+
+### BLE 기기의 GATT 서버에 연결
+
+1. ScanResult 또는 bluetoothAdpater.getRemoteDevice(address) 를 통해 BluetoothDevice 를 불러온다
+2. connectGatt(context, autoConnect, BluetoothCallback) 로 연결한다. BluetoothGatt 객체를 반환
+    - BluetoothCallback 을 통해 연결 상태에 대한 정보를 얻을 수 있다.
+3. BluetoothGatt close 요청으로 연결 종료 
+
+
+### 연결된 기기로 데이터를 전송
+
+```
+code snippet
+```
