@@ -1,0 +1,49 @@
+---
+title: "테스트 항목을 고르는 기준"
+description: "테스트 항목을 고르는 기준을 알아봅니다."
+category: "Testing"
+date: 2026-07-30
+tags: 
+    - testing
+    - unit-testing
+    - test-selection
+---
+
+# 테스트 항목을 고르는 기준
+
+**요약**: 개발자가 어떠한 '결정'을 내리는 코드만 테스트가 필요하다 (제어 흐름)
+
+## 테스트하지 않아도 되는 것
+
+**항목**: 단순 getter/setter class, 위임(delegation), 프레임워크 자동생성 드
+
+- 위임: 단순히 객체를 전달하는 클래스는 테스트가 필요없다.
+- 프레임워크 자동생성: @Data, @Getter, @Setter 등으로 자동 생성된 코드는 테스트가 필요없다. 단, getter/setter가 아닌 로직이 들어간 경우는 테스트 필요 
+
+
+```
+public class User {
+    private String name;
+
+    public String getName() {
+        return this.name; // 단순히 필드를 반환함
+    }
+}
+```
+
+## 테스트해야 하는 것
+
+**항목**: if/else, switch, 루프 조건, 수학적 계산, 검증(Validation)
+
+```
+public class DiscountCalculator {
+    
+    public int calculateDiscount(int price, int userGrade) {
+        // [G-3] 회원 등급이 3 이상이면 10% 할인
+        if (userGrade >= 3) { 
+            return (int) (price * 0.9);
+        }
+        return price;
+    }
+}
+```

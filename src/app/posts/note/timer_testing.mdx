@@ -1,0 +1,55 @@
+---
+title: "타이머 테스트"
+description: "타이머/세션처럼 시간에 의존하는 테스트 하는 방법"
+category: "Testing"
+date: 2026-07-20
+tags:
+    - dart
+    - dependency-injection
+    - unit-testing
+    - fake-clock
+---
+# 시간을 "밖에서 주입" 해서, 실제로 기다리지 않고 임의 시점을 검증한다.
+
+**언제·왜**: 타이머/세션처럼 시간에 의존하는 로직을 테스트할 때. 실제 시계를 쓰면
+20분 검증에 20분이 걸리고, 재부팅 같은 상황은 **검증 자체가 불가능**하다.
+
+**기억할 문장**: **"통제 불가능한 것(시간·랜덤·네트워크)은 인터페이스로 빼서 주입해 통제한다."**
+
+**어떻게**: 테스트에서 시간을 "주입"하고, 실제로 기다리지 않고 임의 시점을 검증한다
+
+**예시**: Flutter에서 `FakeClock`를 사용하여, 실제로 기다리지 않고 타이머를 테스트한다.
+
+```dart
+// 1) 도메인은 시계를 "인터페이스(포트)"로만 안다 — 실제 구현을 모름
+abstract class MonotonicClock {
+  int get elapsedRealtimeMs;
+  String get bootId;
+}
+
+// 2) 테스트는 가짜 시계를 꽂아 시간을 마음대로 조작
+class FakeClock implements MonotonicClock {
+  void advance(Duration d) => _ms += d.inMilliseconds;          // 20분을 즉시 감기
+  void reboot({required int ms, required String bootId}) { ... } // 재부팅 시뮬레이션
+}
+
+// 3) 도메인 함수는 "지금 시각(int)"을 받기만 한다 — 시계를 직접 안 부름
+SessionProgress progressAt(int nowMs) => ...;
+```
+
+→ 여기서 `abstract class`(포트)의 존재 이유가 드러난다: **가짜를 꽂을 수 있게 하려고.**
+`implements MonotonicClock`이면 컴파일러가 "게터 다 채웠냐"를 강제해준다(계약이 코드로 강제됨).
+
+
+# 타이머/세션 테스트 시 고려할 점
+
+- [테스트 고르는 기준](../note/test_what_select.mdx)에서 "제어 흐름"에 해당하는 로직만 테스트한다.
+
+## 정상 동작
+-[단계 경계]: 타이머/세션은 경계값이 중요하다. 1초 전, 1초 후, 0초 등 경계값을 테스트한다.
+-[진행]: 시간 흐르면 값 맞나
+-[불변]: 어떻게 계산해도 같은 값이 나와야 한다. (ex. 20분 세션은 20분만큼 진행되어야 한다)
+
+## 비정상 대응
+-[방어] 사용자 시간 변경으로 인한 입력 방어
+-[판정] 유효한 타이머 세션인가

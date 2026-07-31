@@ -1,0 +1,57 @@
+---
+title: "Flutter Method Channel"
+description: "Flutter에서 Android와 iOS 간에 메시지를 주고받는 방법을 알아봅니다."
+category: "Flutter"
+date: "2026-07-31"
+tags:
+    - flutter
+    - method-channel
+    - isolate
+    - background-service
+---
+
+# Method Channel
+
+## 연결(등록)
+
+**한 줄 정의: **Dart ↔ 네이티브(Kotlin/Swift) 사이의 통신채널. Dart가 못 읽는 OS 정보를 네이티브가 대신 읽어 돌려준다.
+
+- 앱 실행 중에 Dart와 네이티브가 서로 메시지를 주고받을 수 있다.
+- 백그라운드 isolate 에서도 Method Channel을 통해 네이티브와 통신할 수 있다. (ex. 백그라운드 위치 추적, 백그라운드 알람)
+
+// Android
+1. 프로젝트 내부에서 연결하는 방법
+    (네이티브)
+    - Step 1: 채널을 등록하는 공유 클래스 만들기 (Binder)
+    - Step 2: MainActivity에서 채널을 등록
+    - Step 3: Background Service (백그라운드/오버레이 엔진)에서 등록 (AndroidManifest.xml에 서비스 등록 필수)
+    (Flutter)
+    - background 일 경우 WidgetsFlutterBinding.ensureInitialized() 호출 (백그라운드 isolate에서 Flutter 엔진 초기화)
+    - 주의 (@pragma('vm:entry-point') 등록 필수)
+
+2. 플러그인에서 연결하는 방법
+    - packages/device_clock/pubspec.yaml — 이 선언이 "자동 등록 대상"
+    - (네이티브) FlutterPlugin.onAttachedToEngine = 엔진이 뜰 때마다 Flutter가 대신 불러주는 콜백
+    - 메인 엔진은 FlutterActivity 실행시, 백그라운드는 DartPluginRegistrant.ensureInitialized() 호출로 자동 등록
+
+기억할 문장: "채널은 엔진마다 따로 깐다. 백그라운드 isolate엔 MainActivity 등록이 안 닿는다."
+기억할 문장: "plugin: 선언 = 모든 엔진 자동 등록 도장"
+
+// iOS
+
+## 요청
+
+연결된 네이티브 채널로 특정 메서드(요청)를 보내고, 그 결과로 Map 형태의 데이터를 받아오는 함수
+
+```dart
+Future<Map<String, dynamic>> invokeMethod(String method, [Map<String, dynamic>? arguments])
+//ex) _channel.invokeMethod('getBatteryLevel', {'arg1': 'value1'}); 
+``` 
+
+# Exception 
+
+| 예외 | 의미 | 비유 | 다음 행동 |
+|---|---|---|---|
+| `MissingPluginException` | 이 메서드를 처리할 구현이 **없음** | 전화선 자체가 안 깔림 | 등록/구조를 바꿔야 함 |
+| `PlatformException` | 연결은 됐고 **네이티브가 에러** | 받았는데 상대가 문제 | 네이티브 코드를 고치면 됨 |
+
