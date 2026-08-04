@@ -1,0 +1,35 @@
+---
+title: "데이터(anchor)와 판단(resolver)을 한 클래스에 섞지 않는다."
+description: "데이터와 판단을 분리하는 clean architecture를 적용한 anchor resolver 구조를 알아봅니다."
+category: "clean architecture"
+date: "2026-08-03"
+tags: 
+    - clean-architecture
+    - single-responsibility
+    - anchor-resolver
+    - flutter
+---
+
+# Anchor / Resolver를 구분하는 이유 (단일책임)
+
+**언제·왜**: "저장된 값"과 "그 값으로 내리는 결정"이 함께 있을 때. 섞으면 판단 규칙이 여기저기 흩어지고, 각각을 따로 테스트하기 어렵다.
+
+## 장점
+- 판단 규칙이 여기저기 흩어지지 않고, 한 곳에서 관리된다.
+- 판단 규칙을 따로 테스트할 수 있다. (anchor는 그냥 값, resolver는 순수 함수)
+- 판단 규칙이 바뀌어도, 데이터 구조를 바꾸지 않고 판단 로직만 바꾸면 된다.
+
+## 단일책임
+- anchor는 단순히 값만 가진다. (데이터)
+- resolver는 anchor를 받아 판단을 내린다. (판단)
+- anchor와 resolver를 한 클래스에 섞으면, anchor가 바뀔 때마다 resolver도 바뀌어야 한다. (단일책임 위반)    
+
+## 이번에 사용하게 된 계기
+- 실기기 테스트의 시간이 오래 걸려서, 테스트를 빠르게 돌리기 위해서 판단 규칙을 따로 빼서 단위테스트로 검증하고 싶었다.
+
+## 필요한 경우
+- 요구사항 변경이 잦은 핵심 비즈니스 로직
+- 하나의 클래스를 여러 개발자(또는 팀)가 동시에 수정할 때
+- 자동화된 단위 테스트(Unit Test)가 필수적일 때
+- 코드의 재사용성이 높을 때
+

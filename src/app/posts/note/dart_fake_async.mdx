@@ -1,0 +1,26 @@
+---
+title: "Fake Async 테스트 시간 흐르게 하기"
+description: "Dart에서 Fake Async를 사용하여, 실제로 기다리지 않고 임의 시점을 검증하는 방법"
+category: "Testing"
+date: "2026-08-04"
+tags: 
+    - dart
+    - fake-async
+    - unit-testing
+---
+
+# Fake Async를 사용하여, 실제로 기다리지 않고 임의 시점을 검증한다.
+
+한 줄 정의: 시간 delay가 걸려있는 모든 Dart/Flutter 코드를 '기다림 없이 instantly' 테스트하기 위한 타임머신
+
+## Delay 예시
+
+- Future.delayed
+- Timer
+- Timer.periodic
+- 애니메이션 / 디바운싱(Debouncing) 
+
+
+## 주의할점
+[가짜 시간 안에 진짜 지연 작업이 있으면 위험하다](./dart_fake_async_caveat.mdx)
+

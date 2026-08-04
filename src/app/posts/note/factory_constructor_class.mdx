@@ -1,0 +1,44 @@
+---
+title: "규칙 위반되는 생성을 막는 Factory Constructor"
+description: "객체를 만드는 유일한 입구를 만들고, 그 입구가 항상 입력을 규칙에 맞게 강제하는 패턴"
+category: "clean architecture"
+date: "2026-08-03"
+tags: 
+    - factory-constructor
+    - dart
+    - java
+    - kotlin
+---
+
+# Factory Constructor를 사용하는 이유
+
+언제·왜: "검증 안 된 값을 가진 객체가 존재하면 안 될" 때
+
+
+## 사용하는 핵심 이유 4가지
+
+- 잘못된 객체의 탄생을 원천 차단
+- 실패 시 예외 처리나 대안 제시 가능
+- 객체 생성의 '의도'를 이름으로 표현 (Factory 함수는 이름을 자유롭게 지을 수 있어 코드의 가독성을 높입니다.)
+- 검증 로직의 단일화 (검증 책임을 클래스 내부로 가져오기에 검증 로직이 흩어지지 않고, 한 곳에서 관리된다.)
+
+
+## 예시
+```dart
+class SessionProgress {
+  const SessionProgress._({...});   // private = 이 파일 밖에선 직접 못 만듦 (금고)
+
+  factory SessionProgress.of({required int elapsedSeconds, required int totalSeconds}) {
+    final total = totalSeconds < 0 ? 0 : totalSeconds;
+    final elapsed = elapsedSeconds.clamp(0, total);   // 정문이 항상 씻음(역행·점프 방어)
+    ...
+    return SessionProgress._(elapsedSeconds: elapsed, ...);  // 씻은 값으로만 생성
+  }
+}
+```
+
+- factory = 일반 생성자와 달리 돌려주기 전에 계산/가공 가능 (clamp 등)
+- ._(private) = 밖에서 검증 없이 직접 못 만들게 잠금
+- .of() = 유일한 입구. 여기서만 생성 가능. (검증 규칙 강제)
+- 맞는 값으로 변경시키거나 에러로 변환하여 생성을 막을 수 있다.
+

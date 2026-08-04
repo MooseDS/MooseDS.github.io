@@ -1,0 +1,32 @@
+---
+title: "가짜 시간 안에 진짜 지연 작업이 있으면 위험하다"
+description: "Dart에서 Fake Async를 사용하여, 실제로 기다리지 않고 임의 시점을 검증할 때 주의할 점"
+category: "testing"
+date: "2026-08-04"
+tags: 
+    - dart
+    - fake-async
+    - unit-testing
+---
+
+# 타이머(또는 반복 로직) 안에서 지연 시간(Delay)이 존재하는 비동기 함수를 await할 때 주의해야 한다
+
+```
+// 1초 지연 작업 3개가 줄줄이 비동기로 연결되어 있다면?
+Future.delayed(Duration(seconds: 1))
+  .then((_) => Future.delayed(Duration(seconds: 1)))
+  .then((_) => Future.delayed(Duration(seconds: 1)));
+
+async.elapse(Duration(seconds: 3)); 
+// 💥 이벤트 루프 스케줄링 순서에 따라, 
+// 1초짜리 3개가 한 번의 elapse 안에서 다 안 풀리고 Microtask에 남을 수 있음!
+```
+
+## 대처방법
+- `async.elapse`를 여러 번 호출하여, Microtask까지 모두 소진시킨다.
+- `async.flushMicrotasks()`를 호출하여, Microtask까지 모두 소진시킨다. (await -> await -> await 구조일 때 필요)
+- `async.flushTimers()`를 호출하여, Timer까지 모두 소진시킨다. (Timer.periodic 구조일 때 필요)
+
+## 요약
+- Future.delayed (시간 지연)가 얽혀있다: async.elapse(추가시간)으로 시간을 더 흘려주거나 async.flushTimers()를 써야함!
+- 단순 await (지연 없는 비동기)가 얽혀있다: async.flushMicrotasks()만으로 깔끔하게 해결됨!
