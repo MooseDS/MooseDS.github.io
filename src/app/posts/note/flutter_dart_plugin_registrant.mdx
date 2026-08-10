@@ -1,0 +1,33 @@
+---
+title: "Background isolate에서는 Dart Plugin Registrant로 플러그인을 수동으로 등록한다."
+description: "DartPluginRegistrant 클래스는 Flutter 엔진과 Dart 플러그인을 연결하는 역할을 한다. 이 클래스의 역할과 사용법에 대해 알아본다."
+category: "flutter"
+date: "2026-00-00"
+tags: 
+    - flutter
+    - plugin-registrant
+    - dartPluginRegistrant
+---
+
+# DartPluginRegistrant 클래스는 프로젝트에 포함된 플러그인(Firebase, SharedPreferences 등)들을 연결한다.
+
+- 네이티브 (Android/iOS)와 Flutter 엔진 사이에서 플러그인 등록을 담당한다.
+
+## 언제 사용하나요 ?
+
+- 백그라운드(isolate)에서 Flutter 엔진을 초기화하고, 플러그인을 등록해야 하는 경우에 사용된다.
+- 예를 들어, 백그라운드에서 실행되는 알람, 위치 추적, 푸시 알림 등의 기능을 구현할 때 필요하다
+- main 에서는 플러그인을 자동으로 등록하지만, 백그라운드 isolate에서는 수동으로 등록해야 한다.
+
+```dart
+@pragma('vm:entry-point')
+void myBackgroundService() {
+  // 1단계: 이 백그라운드 방에 Flutter 엔진 기초 인프라(통신 채널 등)를 설치한다.
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // 2단계: 설치된 인프라를 바탕으로, 프로젝트에 포함된 플러그인(Firebase, SharedPreferences 등)들을 연결한다.
+  DartPluginRegistrant.ensureInitialized();
+  
+  // 3단계: 이제 안전하게 플러그인 코드를 실행한다.
+}
+``` 

@@ -1,0 +1,46 @@
+---
+title: "앱 프레임워크와 Flutter 엔진을 연결하는 Binding Class"
+description: "WidgetsFlutterBinding 클래스는 Flutter 엔진과 앱 프레임워크를 연결하는 역할을 한다. 이 클래스의 역할과 사용법에 대해 알아본다."
+category: "flutter"
+date: "2026-08-07"
+tags: 
+    - flutter
+    - binding
+    - widgetsflutterbinding
+---
+
+# WidgetsFlutterBinding 클래스는 Flutter 엔진과 앱 프레임워크를 연결하는 역할을 한다. 
+
+이 binding이 없다면 Flutter 앱은 제대로 동작하지 않는다. (필수 선언 필요)
+
+WidgetsFlutterBinding 클래스는 Flutter 엔진과 앱 프레임워크를 연결하는 중요한 역할을 한다. 
+이 클래스는 Flutter 애플리케이션의 기본적인 기능들을 제공하며, 
+
+- 애플리케이션의 생명주기 관리
+- 이벤트 처리, method channel 통신
+- 그리고 UI 렌더링 등의 작업을 담당한다.
+
+## 언제 사용하는 가?
+
+WidgetsFlutterBinding 클래스는 일반적으로 Flutter 애플리케이션의 main() 함수에서 사용된다.
+
+```dart
+void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진과 앱 프레임워크 연결
+  runApp(MyApp());
+}
+``` 
+
+프레임워크 사용이 필요한 경우
+
+- 예를 들어 SharedPreferences, Firebase, Camera 등과 같은 플러그인을 사용하기 전에 반드시 호출해야 한다.
+- 백그라운드에서 실행되는 코드에서 Flutter 엔진과 앱 프레임워크를 연결해야 하는 경우에도 사용된다.
+
+
+## 정리
+
+메인 앱 실행 전에 프레임워크가 올바르게 초기화되고 엔진에 바인딩 되었는지 확인하는 메서드다.
+프레임워크와 초기 상호작용이 필요한 경우 효과적이다.
+
+
+

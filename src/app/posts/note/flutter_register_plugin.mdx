@@ -1,0 +1,41 @@
+---
+title: "plugin: 선언된 패키지로 만들면, Flutter가 모든 엔진에 자동 등록해준다."
+description: "plugin 등록을 위한 방법에 대해 알아본다."
+category: "flutter"
+date: "2026-00-00"
+tags: 
+    - flutter
+    - plugin
+    - dartPluginRegistrant
+---
+
+# plugin: 선언된 패키지로 만들면, Flutter가 main() 함수에서 모든 엔진에 자동 등록해준다.
+
+## 어떻게 사용하나요 ?
+- Flutter 프로젝트에서 플러그인을 사용하려면, 일반적으로 `pubspec.yaml` 파일에 해당 플러그인을 의존성으로 추가해야 한다.
+- Flutter는 이러한 플러그인들을 자동으로 등록하고 초기화한다.
+
+
+#### dependencies에 선언된 패키지는 Flutter가 main() 함수에서 모든 엔진에 자동 등록해준다.
+
+```yaml 
+dependencies:
+  firebase_core: ^2.0.0
+  shared_preferences: ^2.0.0
+```
+
+#### 네이티브 (Android/iOS)와 Flutter 엔진 사이에서 플러그인 등록을 위해서는 'plugin:' 선언이 필요하다.
+
+```yaml
+plugin:
+  device_clock: ^1.0.0
+  platforms:
+    android:
+        package: com.example.device_clock
+    ios:
+        package: com.example.device_clock
+```     
+
+#### 단, [Background isolate에서는 Dart Plugin Registrant로 플러그인을 수동으로 등록한다](./flutter_dart_plugin_registrant.mdx).
+
+
