@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
@@ -55,9 +55,11 @@ export function BlogPostShell({
               </Avatar>
               <span className="font-semibold">{author.name}</span>
             </div>
-            <span className="text-muted-foreground">
-              Published on {format(pubDate, "MMMM d, yyyy")}
-            </span>
+            {isValid(pubDate) ? (
+              <span className="text-muted-foreground">
+                Published on {format(pubDate, "MMMM d, yyyy")}
+              </span>
+            ) : null}
           </div>
           {image ? (
             <img
