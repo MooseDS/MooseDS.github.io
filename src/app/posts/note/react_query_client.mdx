@@ -15,7 +15,7 @@ tags:
 - 앱당 하나의 QueryClient를 생성하고, QueryClientProvider를 통해 Context 주입하여 전체에 제공한다.
 - 컴포넌트에서는 useQueryClient() 훅을 통해 QueryClient를 가져와서 사용할 수 있다.
 
-```react
+```tsx
 const queryClient = new QueryClient({ defaultOptions: { ... } });
 <QueryClientProvider client={queryClient}> 
     <App /> 
