@@ -1,0 +1,27 @@
+---
+title: "앱 전체의 캐시 저장소이자 사령탑 QueryClient"
+description: "React Query Client에 대해 알아봅니다."
+category: "react"
+date: "2026-08-10"
+tags: 
+    - react
+    - react-query
+---
+
+# React Query Client는 앱 전체의 캐시 저장소이자 사령탑이다.
+
+- 캐시 (QueryChache + MutationCache) 를 관리한다.
+- invalidate, setQueryData, getQueryData 등 캐시를 직접 조작하는 API를 제공한다.
+- 앱당 하나의 QueryClient를 생성하고, QueryClientProvider를 통해 Context 주입하여 전체에 제공한다.
+- 컴포넌트에서는 useQueryClient() 훅을 통해 QueryClient를 가져와서 사용할 수 있다.
+
+```react
+const queryClient = new QueryClient({ defaultOptions: { ... } });
+<QueryClientProvider client={queryClient}> 
+    <App /> 
+</QueryClientProvider>
+```
+
+## 함정
+- 컴포넌트 안에서 new QueryClient() 를 하면 렌더마다 캐시가 날아간다. 모듈 스코프나 useState(() => new QueryClient()) 로 생성해야 한다.
+- QueryClientProvider를 여러 번 중첩하면, 하위 컴포넌트에서는 상위 QueryClient를 사용할 수 없다. (useQueryClient() 는 가장 가까운 QueryClientProvider를 참조한다.)

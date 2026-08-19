@@ -1,0 +1,42 @@
+---
+title: "Query Key는 계층구조로 팩토리 함수로 만든다"
+description: "Query Key는 계층구조로 팩토리 함수로 만들어야 한다. 이 글에서는 Query Key를 계층구조로 만들고, 팩토리 함수를 사용하는 이유와 방법에 대해 설명한다."
+category: "react"
+date: "2026-08-11"
+tags:
+    - react
+    - query-key
+    - react-query
+---
+
+# Query Key는 캐시를 구분하는 고유한 식별자이다.
+
+## 배열이다
+- 내부적으로 해싱되어 문자열 키가 된다.
+- 배열 요소로 객체가 들어가도 키 순서는 무관하다. \{a:1,b:2\}와 \{b:2,a:1\}은 같은 키.
+
+## 계층(prefix) 구조가 핵심:
+
+```
+['todos']                  ← 이것으로 invalidate 하면
+['todos', 'list']          ← 이 아래 전부 걸린다
+['todos', 'list', {done:true}]
+['todos', 'detail', id]
+```
+
+## 키 안의 값이 바뀌면 다른 캐시로 취급된다.
+- 예를 들어, `['todos', 'list', {done:true}]` 와 `['todos', 'list', {done:false}]` 는 다른 캐시로 취급된다.
+
+## 반드시 상수로 빼거나 key -factory 함수를 만들어서 사용해야 한다.
+- 문자열을 직접 쓰면 오타로 인해 invalidate가 안 걸리는 등 버그가 발생할 수 있다.
+
+```
+const TODOS_QUERY_KEY = ['todos'] as const;
+
+export const todoKeys = {
+  all:    ['todos'] as const,
+  lists:  () => [...todoKeys.all, 'list'] as const,
+  list:   (filter: string) => [...todoKeys.lists(), filter] as const,
+  detail: (id: string) => [...todoKeys.all, 'detail', id] as const,
+};
+```
